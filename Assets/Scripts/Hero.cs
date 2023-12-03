@@ -7,23 +7,22 @@ public class Hero : MonoBehaviour
 {
     public float jumpForce;
     public float speed;
+    public GameObject fireballFrefab;
 
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
     private float Horizontal;
     private bool Grounded;
     private bool Attacking;
+    private float LastAttack;
 
-
-
-    // Start is called before the first frame update
+    //Manejar vida del player
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Movimiento
@@ -32,14 +31,18 @@ public class Hero : MonoBehaviour
         if(Horizontal < 0.0f) transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         else if(Horizontal > 0.0f) transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
-        //Ataque
-        if (Input.GetMouseButtonDown(0)) Attack();
-        else Attacking = false;
-
         //Animacion
         Animator.SetBool("Jumping", Grounded == false);
         Animator.SetBool("Running", Horizontal != 0.0f && Grounded);
         Animator.SetBool("Attacking", Attacking);
+
+        //Ataque
+        if (Input.GetMouseButtonDown(0) && Time.time > LastAttack + 0.60f)
+        {
+            Attack();
+            LastAttack = Time.time;
+        }
+        else Attacking = false;
 
         //Para controlar que solo salte si esta tocando el suelo
         Debug.DrawRay(transform.position, Vector3.down * 0.3f, Color.yellow);
@@ -66,6 +69,13 @@ public class Hero : MonoBehaviour
     }
     private void Attack()
     {
+        Debug.Log("Atacando xd");
+
         Attacking = true;
+
+        Vector3 direction = transform.localScale.x > 0.0f ? Vector2.right : Vector2.left;
+
+        GameObject fireball = Instantiate(fireballFrefab, transform.position + new Vector3(direction.x * 0.2f, direction.y * 5f), Quaternion.identity);
+        fireball.GetComponent<Fireball>().setFireballDirection(direction);
     }
 }
