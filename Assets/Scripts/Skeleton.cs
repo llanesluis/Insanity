@@ -15,16 +15,17 @@ public class Skeleton : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
     private Vector3 Direction;
-    
+   
 
     //Manejar vida del enemigo
-    private int Healt = 3;
+    private int Health = 2;
 
     void Start()
     {
         Hero = GameObject.FindWithTag("Player");
         Rigidbody2D = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
+
     }
 
     void Update()
@@ -34,6 +35,8 @@ public class Skeleton : MonoBehaviour
 
         Animator.SetBool("isSpawned", isSpawned);
         Animator.SetBool("isDead", isDead);
+
+
     }
 
     private void FixedUpdate()
@@ -58,9 +61,9 @@ public class Skeleton : MonoBehaviour
     public void hit()
     {
         Debug.Log("Bala pego a skeleton");
-        Healt--;
+        Health--;
 
-        if (Healt == 0)
+        if (Health == 0)
         {
             isDead = true;
         }

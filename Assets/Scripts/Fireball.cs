@@ -11,6 +11,7 @@ public class Fireball : MonoBehaviour
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
+
     }
 
     void Update()
@@ -25,6 +26,9 @@ public class Fireball : MonoBehaviour
 
     public void setFireballDirection(Vector2 direction)
     {
+        if (direction.x >= 0.0f) transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        else if (direction.x < 0.0f) transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+
         Direction = direction;
     }
 

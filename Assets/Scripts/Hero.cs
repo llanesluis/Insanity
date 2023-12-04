@@ -8,6 +8,8 @@ public class Hero : MonoBehaviour
     public float jumpForce;
     public float speed;
     public GameObject fireballFrefab;
+    public bool isHurt;
+    public bool isDead;
 
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
@@ -16,6 +18,8 @@ public class Hero : MonoBehaviour
     private bool Attacking;
     private float LastAttack;
 
+    [SerializeField] private int Health = 10;
+    
     //Manejar vida del player
     void Start()
     {
@@ -25,16 +29,22 @@ public class Hero : MonoBehaviour
 
     void Update()
     {
-        //Movimiento
-        Horizontal = Input.GetAxisRaw("Horizontal");
+        //Movimiento si el personaje no esta muerto
 
-        if(Horizontal < 0.0f) transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        if(!isDead) Horizontal = Input.GetAxisRaw("Horizontal");
+        if (isDead) Horizontal = 0.0f;
+
+        if (Horizontal < 0.0f) transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         else if(Horizontal > 0.0f) transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         //Animacion
         Animator.SetBool("Jumping", Grounded == false);
         Animator.SetBool("Running", Horizontal != 0.0f && Grounded);
         Animator.SetBool("Attacking", Attacking);
+
+        //Animacion de muerte
+        Animator.SetBool("Dead", isDead);
+        Animator.SetBool("Hurt", isHurt);
 
         //Ataque
         if (Input.GetMouseButtonDown(0) && Time.time > LastAttack + 0.60f)
@@ -56,6 +66,8 @@ public class Hero : MonoBehaviour
         {
             Jump();
         }
+
+
     }
 
     private void FixedUpdate()
@@ -77,5 +89,43 @@ public class Hero : MonoBehaviour
 
         GameObject fireball = Instantiate(fireballFrefab, transform.position + new Vector3(direction.x * 0.2f, direction.y * 5f), Quaternion.identity);
         fireball.GetComponent<Fireball>().setFireballDirection(direction);
+    }
+
+    public void bajarVida(int puntosDeVida)
+    {
+        Debug.Log("- " + puntosDeVida + " de vida");
+        isHurt = true;
+
+        Health--;
+
+        if (Health == 0)
+        {
+            isDead = true;
+        }
+    }
+
+    public void gameOver()
+    {
+        //Escena que diga GAME OVER
+        Debug.Log(">>>>>>>>>>GAME OVER<<<<<<<<<<");
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!isDead) {
+            DisparoEnemigo disparo = collision.GetComponent<DisparoEnemigo>();
+
+            if (disparo != null)
+            {
+                bajarVida(1);
+                Destroy(collision.gameObject);
+
+            }
+        }
+    }
+
+    public void resetNormalState()
+    {
+        isHurt = false;
     }
 }

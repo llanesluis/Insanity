@@ -34,7 +34,7 @@ public class Cat : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FollowPlayer();
+        if (Animator.GetBool("StartMovement")) FollowPlayer();
     }
 
     private void SetCatDirection()
