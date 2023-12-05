@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Piso
   - Bordes
+  - AngelAttack
+  - BossAngelAttack
+  - BossGhostAttack
+  - Skeleton
+  - Espinas
+  - Gato
   layers:
   - Default
   - TransparentFX

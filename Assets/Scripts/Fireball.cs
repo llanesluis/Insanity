@@ -39,6 +39,7 @@ public class Fireball : MonoBehaviour
         Skeleton skeleton = collision.GetComponent<Skeleton>();
         Angel angel = collision.GetComponent<Angel>();
         Cat cat = collision.GetComponent<Cat>();
+        Fantasma fantasma = collision.GetComponent<Fantasma>();
 
         //Restarles puntos de vida
         if (skeleton != null)
@@ -56,6 +57,12 @@ public class Fireball : MonoBehaviour
         if (cat != null)
         {
             cat.hit();
+            Destroy(gameObject);
+        }
+
+        if (fantasma != null)
+        {
+            fantasma.hit();
             Destroy(gameObject);
         }
 

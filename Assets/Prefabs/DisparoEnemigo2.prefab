@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1988116582099398493}
   m_Layer: 0
   m_Name: DisparoEnemigo2
-  m_TagString: Untagged
+  m_TagString: BossGhostAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8e17f1b143d8e479f1552d24383815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   Hero: {fileID: 0}
 --- !u!50 &11794194231904347
 Rigidbody2D:

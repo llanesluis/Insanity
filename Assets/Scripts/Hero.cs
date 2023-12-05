@@ -11,6 +11,12 @@ public class Hero : MonoBehaviour
     public bool isHurt;
     public bool isDead;
 
+
+    [SerializeField] private float tiempoEntreDPS = 1.0f;
+    [SerializeField] private float tiempoUltimoDPS = 1.0f;
+    [SerializeField] private float tiempoDeEsperaDPS;
+    [SerializeField] private bool recibiendoDPS;
+
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
     private float Horizontal;
@@ -29,6 +35,12 @@ public class Hero : MonoBehaviour
 
     void Update()
     {
+        if (isDead) {
+            Animator.SetBool("Dead", isDead);
+            return;
+        }
+       
+
         //Movimiento si el personaje no esta muerto
 
         if(!isDead) Horizontal = Input.GetAxisRaw("Horizontal");
@@ -43,8 +55,9 @@ public class Hero : MonoBehaviour
         Animator.SetBool("Attacking", Attacking);
 
         //Animacion de muerte
-        Animator.SetBool("Dead", isDead);
+        //Animator.SetBool("Dead", isDead);
         Animator.SetBool("Hurt", isHurt);
+
 
         //Ataque
         if (Input.GetMouseButtonDown(0) && Time.time > LastAttack + 0.60f)
@@ -68,6 +81,11 @@ public class Hero : MonoBehaviour
         }
 
 
+        //Si se hace daño por segundo
+        if (recibiendoDPS)
+        {
+            bajarVidaPorSegundo(1);
+        }
     }
 
     private void FixedUpdate()
@@ -91,17 +109,30 @@ public class Hero : MonoBehaviour
         fireball.GetComponent<Fireball>().setFireballDirection(direction);
     }
 
-    public void bajarVida(int puntosDeVida)
+    public void bajarVida(int puntosDeVida = 1)
     {
         Debug.Log("- " + puntosDeVida + " de vida");
         isHurt = true;
 
-        Health--;
+        Health -= puntosDeVida;
 
-        if (Health == 0)
+        if (Health <= 0)
         {
             isDead = true;
         }
+    }
+
+    public void bajarVidaPorSegundo(int puntosDeVida = 1)
+    {
+
+        if (Time.time > tiempoEntreDPS + tiempoUltimoDPS)
+        {
+            tiempoUltimoDPS = Time.time;
+            Debug.Log("- " + puntosDeVida + " DPS");
+
+            bajarVida(puntosDeVida);
+        }
+
     }
 
     public void gameOver()
@@ -113,17 +144,86 @@ public class Hero : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isDead) {
-            DisparoEnemigo disparo = collision.GetComponent<DisparoEnemigo>();
 
-            if (disparo != null)
+
+            if (collision.CompareTag("Espinas"))
             {
-                bajarVida(1);
+                Debug.Log("Tocó espinas");
+                //bajarVida(1);
+
+                recibiendoDPS = true;
+            }
+
+
+            if (collision.CompareTag("AngelAttack"))
+            {
+                bajarVida(2);
                 Destroy(collision.gameObject);
 
+            }
+
+            if (collision.CompareTag("BossAngelAttack"))
+            {
+                bajarVida(3);
+                Destroy(collision.gameObject);
+
+            }
+
+            if (collision.CompareTag("BossGhostAttack"))
+            {
+                bajarVida(2);
+                Destroy(collision.gameObject);
             }
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isDead)
+        {
+            if (collision.collider.CompareTag("Skeleton"))
+            {
+                Debug.Log("Te ataco un skeleton");
+                //bajarVida(1);
+
+                recibiendoDPS = true;
+            }
+
+            if (collision.collider.CompareTag("Gato"))
+            {
+                Debug.Log("Te ataco un gato");
+                //bajarVida(1);
+
+                recibiendoDPS = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (!isDead)
+        {
+            if (collision.collider.CompareTag("Skeleton"))
+            {
+                recibiendoDPS = false;
+            }
+
+            if (collision.collider.CompareTag("Gato"))
+            {
+                recibiendoDPS = false;
+            }
+
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.CompareTag("Espinas"))
+        {
+            recibiendoDPS = false;
+        }
+    }
     public void resetNormalState()
     {
         isHurt = false;

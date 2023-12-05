@@ -81,7 +81,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4530548620753826264, guid: 07fbbe67d65a8b549a3f8c7b2dc70870, type: 3}
       propertyPath: m_Name
-      value: EnemyAngelDisparo Variant
+      value: EnemyAngel Variant Disparo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4530548620753826264, guid: 07fbbe67d65a8b549a3f8c7b2dc70870, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7179625860539432499, guid: 07fbbe67d65a8b549a3f8c7b2dc70870, type: 3}
       propertyPath: m_FlipX
