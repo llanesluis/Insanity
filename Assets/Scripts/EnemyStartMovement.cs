@@ -7,7 +7,7 @@ public class EnemyStartMovement : MonoBehaviour
     private Animator Animator;
 
 
-    public Transform controladorSpawn;
+    public Transform controladorMovimiento;
     public float distanciaLinea;
     public LayerMask layerMask;
     public bool jugadorEnRango;
@@ -22,7 +22,7 @@ public class EnemyStartMovement : MonoBehaviour
     void Update()
     {
 
-        jugadorEnRango = Physics2D.Raycast(controladorSpawn.position, -transform.right, distanciaLinea, layerMask);
+        jugadorEnRango = Physics2D.Raycast(controladorMovimiento.position, -transform.right, distanciaLinea, layerMask);
 
         if (jugadorEnRango )
         {
@@ -35,6 +35,6 @@ public class EnemyStartMovement : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         // Ajusta la posición de destino en el eje y
-        Gizmos.DrawLine(controladorSpawn.position, controladorSpawn.position - transform.right * distanciaLinea);
+        Gizmos.DrawLine(controladorMovimiento.position, controladorMovimiento.position - transform.right * distanciaLinea);
     }
 }

@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Skeleton : MonoBehaviour
+public class Spider : MonoBehaviour
 {
-    public float speed;
-    public bool isSpawned;
-    public bool isDead;
-
+    [SerializeField] private float speed;
+    [SerializeField] private bool isDead;
     [SerializeField] private GameObject Hero;
     [SerializeField] private SpriteRenderer SpriteRenderer;
 
@@ -16,9 +13,8 @@ public class Skeleton : MonoBehaviour
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
     private Vector3 Direction;
-   
 
-    //Manejar vida del enemigo
+    // Manejar vida del enemigo
     private int Health = 1;
 
     void Start()
@@ -28,56 +24,47 @@ public class Skeleton : MonoBehaviour
         Animator = GetComponent<Animator>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
 
-
     }
 
     void Update()
     {
-        //Para que siempre este mirando al jugador
-        SetEnemyDirection();
+        // Para que siempre esté mirando al jugador
+        SetSpiderDirection();
 
-        Animator.SetBool("isSpawned", isSpawned);
         Animator.SetBool("isDead", isDead);
-
-
     }
 
     private void FixedUpdate()
     {
-        if (isSpawned == true) FollowPLayer();
+        if (Animator.GetBool("StartMovement")) FollowPlayer();
     }
 
-    private void SetEnemyDirection()
+    private void SetSpiderDirection()
     {
         Direction = Hero.transform.position - transform.position;
-        //if (Direction.x >= 0.0f) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        //else if (Direction.x <= 0.0f) transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-
         if (Direction.x >= 0.0f) SpriteRenderer.flipX = true;
         else if (Direction.x <= 0.0f) SpriteRenderer.flipX = false;
     }
-    private void FollowPLayer()
+
+    private void FollowPlayer()
     {
         Rigidbody2D.velocity = new Vector2((Direction.x > 0.0f ? 1 : -1) * speed, Rigidbody2D.velocity.y);
     }
-    public void startMovement()
-    {
-        isSpawned = true;
-    }
+
     public void hit()
     {
-        Debug.Log("Bala pego a skeleton");
+        Debug.Log("Bala pegó a la araña");
         Health--;
 
         if (Health == 0)
         {
             isDead = true;
         }
-
     }
-    public void destroySkeleton()
+
+    public void destroySpider()
     {
-        Debug.Log("Enemigo muerto");
+        Debug.Log("Araña derrotada");
         Destroy(gameObject);
     }
 }

@@ -7,21 +7,24 @@ public class Cat : MonoBehaviour
     public float speed;
     public bool isDead;
 
-    [SerializeField]
-    private GameObject Hero;
+    [SerializeField] private GameObject Hero;
+    [SerializeField] private SpriteRenderer SpriteRenderer;
+
 
     private Rigidbody2D Rigidbody2D;
     private Animator Animator;
     private Vector3 Direction;
 
     // Manejar vida del enemigo
-    private int Health = 3;
+    private int Health = 2;
 
     void Start()
     {
         Hero = GameObject.FindWithTag("Player");
         Rigidbody2D = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     void Update()
@@ -40,8 +43,8 @@ public class Cat : MonoBehaviour
     private void SetCatDirection()
     {
         Direction = Hero.transform.position - transform.position;
-        if (Direction.x >= 0.0f) transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-        else if (Direction.x <= 0.0f) transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        if (Direction.x >= 0.0f) SpriteRenderer.flipX = true;
+        else if (Direction.x <= 0.0f) SpriteRenderer.flipX = false;
     }
 
     private void FollowPlayer()

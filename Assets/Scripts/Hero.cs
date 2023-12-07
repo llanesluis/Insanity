@@ -122,6 +122,19 @@ public class Hero : MonoBehaviour
         }
     }
 
+    public void obtenerVida(int puntosDeVida = 1)
+    {
+        if (Health >= 10)
+        {
+            return;
+        }
+
+        Debug.Log("+ " + puntosDeVida + " de vida");
+
+        Health += puntosDeVida;
+
+    }
+
     public void bajarVidaPorSegundo(int puntosDeVida = 1)
     {
 
@@ -145,6 +158,14 @@ public class Hero : MonoBehaviour
     {
         if (!isDead) {
 
+
+            if (collision.CompareTag("Vida"))
+            {
+
+                obtenerVida(1);
+                Destroy(collision.gameObject);
+
+            }
 
             if (collision.CompareTag("Espinas"))
             {
@@ -174,6 +195,12 @@ public class Hero : MonoBehaviour
                 bajarVida(2);
                 Destroy(collision.gameObject);
             }
+
+            if (collision.CompareTag("FinalBossNormalAttack"))
+            {
+                bajarVida(1);
+                Destroy(collision.gameObject);
+            }
         }
     }
 
@@ -184,7 +211,6 @@ public class Hero : MonoBehaviour
             if (collision.collider.CompareTag("Skeleton"))
             {
                 Debug.Log("Te ataco un skeleton");
-                //bajarVida(1);
 
                 recibiendoDPS = true;
             }
@@ -192,7 +218,20 @@ public class Hero : MonoBehaviour
             if (collision.collider.CompareTag("Gato"))
             {
                 Debug.Log("Te ataco un gato");
-                //bajarVida(1);
+
+                recibiendoDPS = true;
+            }
+
+            if (collision.collider.CompareTag("Thing"))
+            {
+                Debug.Log("Te ataco un thing");
+
+                recibiendoDPS = true;
+            }
+
+            if (collision.collider.CompareTag("Spider"))
+            {
+                Debug.Log("Te ataco una spider");
 
                 recibiendoDPS = true;
             }
@@ -213,11 +252,22 @@ public class Hero : MonoBehaviour
                 recibiendoDPS = false;
             }
 
+            if (collision.collider.CompareTag("Thing"))
+            {
+                recibiendoDPS = false;
+            }
+
+            if (collision.collider.CompareTag("Spider"))
+            {
+                recibiendoDPS = false;
+            }
+
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+
 
         if (collision.CompareTag("Espinas"))
         {

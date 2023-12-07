@@ -6,18 +6,23 @@ public class Angel : MonoBehaviour
 {
     public bool isDead;
 
-    [SerializeField]
-    private GameObject Hero;
+    [SerializeField] private GameObject Hero;
+
+    // Manejar vida del enemigo
+    [SerializeField] bool isBoss = false;
+    [SerializeField] private int Health = 3;
+
 
     private Animator Animator;
 
-    // Manejar vida del enemigo
-    private int Health = 5;
 
     void Start()
     {
         Hero = GameObject.FindWithTag("Player");
         Animator = GetComponent<Animator>();
+
+        if(isBoss) Health = 5; 
+        else Health = 3;
     }
 
     void Update()
