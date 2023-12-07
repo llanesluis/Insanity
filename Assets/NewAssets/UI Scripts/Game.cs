@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Pause : MonoBehaviour
 {
     [SerializeField] private GameObject menuPause;
+    [SerializeField] private GameObject menuMuerte;
     [SerializeField] private Hero player;
     
     [SerializeField] private Image HP;
@@ -88,6 +89,8 @@ public class Pause : MonoBehaviour
         {
             // Cuando HP es 0 o cualquier otro valor no especificado
             HP.sprite = HPEmpty;
+            menuMuerte.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 

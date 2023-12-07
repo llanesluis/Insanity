@@ -27,4 +27,14 @@ public class InGameMenu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ReintentarNivel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

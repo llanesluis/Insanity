@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hero : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class Hero : MonoBehaviour
         set
         {
             // Comprobar si el valor de HP ha cambiado
-            if (_Healt != value && value >= 0 && value <= 10)
+            if (_Healt != value)
             {
                 _Healt = value;
 
@@ -266,6 +267,16 @@ public class Hero : MonoBehaviour
             if (collision.collider.CompareTag("FinalBoss"))
             {
                 bajarVida(8);
+            }
+
+            if (collision.collider.CompareTag("Town-Cementery"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }
+
+            if (collision.collider.CompareTag("Cementery-Swamp"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
     }

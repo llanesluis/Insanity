@@ -15,7 +15,7 @@ public class BossFinalFantasma : MonoBehaviour
 
 
     // Manejar vida del enemigo
-    [SerializeField] private int Health = 1;
+    [SerializeField] private int Health = 10;
 
     void Start()
     {
