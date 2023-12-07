@@ -34,7 +34,7 @@ public class EnemyAttack : MonoBehaviour
     {
         SetDirection();
 
-        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position, transformRight, distanciaLinea, layerMask);
+        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position - new Vector3(0f, 0.25f, 0f), transformRight, distanciaLinea, layerMask);
         //jugadorEnRango = Physics2D.Raycast(controladorAtaque.position, -transform.right, distanciaLinea, layerMask);
 
         if (jugadorEnRango)
@@ -51,7 +51,7 @@ public class EnemyAttack : MonoBehaviour
 
     private void Disparar()
     {
-        Instantiate(disparoEnemigoPrefab, controladorAtaque.position, controladorAtaque.rotation);
+        Instantiate(disparoEnemigoPrefab, controladorAtaque.position - new Vector3(0f, 0.25f, 0f), controladorAtaque.rotation);
         //Instantiate(disparoEnemigoPrefab, controladorAtaque.position, controladorAtaque.rotation);
 
     }
@@ -60,7 +60,7 @@ public class EnemyAttack : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         // Ajusta la posición de destino en el eje y
-        Gizmos.DrawLine(controladorAtaque.position, controladorAtaque.position + transformRight * distanciaLinea);
+        Gizmos.DrawLine(controladorAtaque.position - new Vector3(0f, 0.25f, 0f), controladorAtaque.position - new Vector3(0f, 0.25f, 0f) + transformRight * distanciaLinea);
         //Gizmos.DrawLine(controladorAtaque.position, controladorAtaque.position - transform.right * distanciaLinea);
 
     }

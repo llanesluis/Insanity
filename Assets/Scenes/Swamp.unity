@@ -5857,7 +5857,7 @@ Transform:
   m_GameObject: {fileID: 1251962175}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.561802, y: 3.5353217, z: -3.2874365}
+  m_LocalPosition: {x: -31.562344, y: 3.5353222, z: -3.2874365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35803,6 +35803,10 @@ PrefabInstance:
     - target: {fileID: 6538524758644924724, guid: 4c14c997517dd764c8f95d3b30d932b6, type: 3}
       propertyPath: m_Name
       value: Fantasma2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7264425165613906190, guid: 4c14c997517dd764c8f95d3b30d932b6, type: 3}
+      propertyPath: jugadorEnRango
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7264425165613906190, guid: 4c14c997517dd764c8f95d3b30d932b6, type: 3}
       propertyPath: tiempoEntreDisparos
