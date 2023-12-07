@@ -19,16 +19,25 @@ public class FinalBossAttack : MonoBehaviour
     public GameObject disparoNormalPrefab;
     public GameObject disparoFuertePrefab;
 
+    [SerializeField] private GameObject Hero;
+    private Vector3 Direction;
+
+    private Vector3 transformRight;
+
     void Start()
     {
         Animator = GetComponent<Animator>();
+        Hero = GameObject.FindWithTag("Player");
+
     }
 
     void Update()
     {
-        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position - new Vector3(0f, 0.25f, 0f), -transform.right, distanciaLinea, layerMask);
-        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position, -transform.right, distanciaLinea, layerMask);
-        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position - new Vector3(0f, -0.25f, 0f), -transform.right, distanciaLinea, layerMask);
+        SetDirection();
+
+        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position - new Vector3(0f, 0.25f, 0f), transformRight, distanciaLinea, layerMask);
+        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position, transformRight, distanciaLinea, layerMask);
+        jugadorEnRango = Physics2D.Raycast(controladorAtaque.position - new Vector3(0f, -0.25f, 0f), transformRight, distanciaLinea, layerMask);
 
 
         if (jugadorEnRango)
@@ -56,10 +65,24 @@ public class FinalBossAttack : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         // Ajusta la posición de destino en el eje y
-        Gizmos.DrawLine(controladorAtaque.position - new Vector3(0f, 0.25f, 0f), controladorAtaque.position - new Vector3(0f, 0.25f, 0f) - transform.right * distanciaLinea);
-        Gizmos.DrawLine(controladorAtaque.position, controladorAtaque.position - transform.right * distanciaLinea);
-        Gizmos.DrawLine(controladorAtaque.position - new Vector3(0f, -0.25f, 0f), controladorAtaque.position - new Vector3(0f, -0.25f, 0f) - transform.right * distanciaLinea);
+        Gizmos.DrawLine(controladorAtaque.position - new Vector3(0f, 0.25f, 0f), controladorAtaque.position - new Vector3(0f, 0.25f, 0f) + transformRight * distanciaLinea);
+        Gizmos.DrawLine(controladorAtaque.position, controladorAtaque.position + transformRight * distanciaLinea);
+        Gizmos.DrawLine(controladorAtaque.position - new Vector3(0f, -0.25f, 0f), controladorAtaque.position - new Vector3(0f, -0.25f, 0f) + transformRight * distanciaLinea);
 
 
+    }
+
+    private void SetDirection()
+    {
+        Direction = Hero.transform.position - transform.position;
+
+        if (Direction.x >= 0.0f)
+        {
+            transformRight = transform.right;
+        }
+        else if (Direction.x <= 0.0f)
+        {
+            transformRight = -transform.right;
+        }
     }
 }

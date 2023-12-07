@@ -42,6 +42,7 @@ public class Fireball : MonoBehaviour
         Fantasma fantasma = collision.GetComponent<Fantasma>();
         Thing thing = collision.GetComponent<Thing>();
         Spider spider = collision.GetComponent<Spider>();
+        BossFinalFantasma finalBoss = collision.GetComponent<BossFinalFantasma>();
 
         //Restarles puntos de vida
         if (skeleton != null)
@@ -77,6 +78,12 @@ public class Fireball : MonoBehaviour
         if (fantasma != null)
         {
             fantasma.hit();
+            Destroy(gameObject);
+        }
+
+        if (finalBoss != null)
+        {
+            finalBoss.hit();
             Destroy(gameObject);
         }
 

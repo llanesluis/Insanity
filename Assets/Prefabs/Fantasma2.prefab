@@ -208,7 +208,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  isBoss: 0
+  isFinalBoss: 0
   Hero: {fileID: 0}
+  SpriteRenderer: {fileID: 0}
 --- !u!1 &9174196634647922326
 GameObject:
   m_ObjectHideFlags: 0

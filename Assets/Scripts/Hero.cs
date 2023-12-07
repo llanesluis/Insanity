@@ -262,6 +262,11 @@ public class Hero : MonoBehaviour
 
                 recibiendoDPS = true;
             }
+
+            if (collision.collider.CompareTag("FinalBoss"))
+            {
+                bajarVida(8);
+            }
         }
     }
 

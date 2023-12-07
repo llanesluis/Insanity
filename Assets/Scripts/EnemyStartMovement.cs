@@ -12,17 +12,23 @@ public class EnemyStartMovement : MonoBehaviour
     public LayerMask layerMask;
     public bool jugadorEnRango;
 
+    [SerializeField] private GameObject Hero;
+    private Vector3 Direction;
 
+    private Vector3 transformRight;
 
     void Start()
     {
         Animator = GetComponent<Animator>();
+        Hero = GameObject.FindWithTag("Player");
+
     }
 
     void Update()
     {
+        SetDirection();
 
-        jugadorEnRango = Physics2D.Raycast(controladorMovimiento.position, -transform.right, distanciaLinea, layerMask);
+        jugadorEnRango = Physics2D.Raycast(controladorMovimiento.position, transformRight, distanciaLinea, layerMask);
 
         if (jugadorEnRango )
         {
@@ -35,6 +41,20 @@ public class EnemyStartMovement : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         // Ajusta la posición de destino en el eje y
-        Gizmos.DrawLine(controladorMovimiento.position, controladorMovimiento.position - transform.right * distanciaLinea);
+        Gizmos.DrawLine(controladorMovimiento.position, controladorMovimiento.position + transformRight * distanciaLinea);
+    }
+
+    private void SetDirection()
+    {
+        Direction = Hero.transform.position - transform.position;
+
+        if (Direction.x >= 0.0f)
+        {
+            transformRight = transform.right;
+        }
+        else if (Direction.x <= 0.0f)
+        {
+            transformRight = -transform.right;
+        }
     }
 }

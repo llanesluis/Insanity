@@ -16,6 +16,10 @@ TagManager:
   - Thing
   - Spider
   - FinalBossNormalAttack
+  - Town-Cementery
+  - Cementery-Swamp
+  - Swamp-End
+  - FinalBoss
   layers:
   - Default
   - TransparentFX

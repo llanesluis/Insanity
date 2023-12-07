@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Fantasma : MonoBehaviour
+public class BossFinalFantasma : MonoBehaviour
 {
     public bool isDead;
-    public bool isBoss;
-
 
     [SerializeField] private GameObject Hero;
     [SerializeField] private SpriteRenderer SpriteRenderer;
@@ -16,16 +15,13 @@ public class Fantasma : MonoBehaviour
 
 
     // Manejar vida del enemigo
-    private int Health = 3;
+    [SerializeField] private int Health = 1;
 
     void Start()
     {
         Hero = GameObject.FindWithTag("Player");
         Animator = GetComponent<Animator>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (isBoss) Health = 6;
-        else Health = 3;
     }
 
     void Update()
@@ -52,10 +48,12 @@ public class Fantasma : MonoBehaviour
         }
     }
 
-    public void destroyFantasma()
+    public void destroyFantasmaGameOver()
     {
-        Debug.Log("Fantasma derrotado");
+        Debug.Log("MATASTE AL JEFE FINAL!");
         Destroy(gameObject);
+
+        SceneManager.LoadScene(4);
     }
 
     private void SetEnemyDirection()
@@ -64,7 +62,7 @@ public class Fantasma : MonoBehaviour
         //if (Direction.x >= 0.0f) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         //else if (Direction.x <= 0.0f) transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
-        if (Direction.x >= 0.0f) SpriteRenderer.flipX = true;
-        else if (Direction.x <= 0.0f) SpriteRenderer.flipX = false;
+        if (Direction.x >= 0.0f) SpriteRenderer.flipX = false;
+        else if (Direction.x <= 0.0f) SpriteRenderer.flipX = true;
     }
 }
