@@ -24,9 +24,35 @@ public class Hero : MonoBehaviour
     private bool Attacking;
     private float LastAttack;
 
-    [SerializeField] private int Health = 10;
-    
-    //Manejar vida del player
+
+    // Declarar el delegado y el evento
+    public delegate void CambioHPDelegate();
+    public event CambioHPDelegate OnCambioHP;
+
+    [SerializeField] private int _Healt;
+
+    public int Health
+    {
+        get { return _Healt; }
+        set
+        {
+            // Comprobar si el valor de HP ha cambiado
+            if (_Healt != value && value >= 0 && value <= 10)
+            {
+                _Healt = value;
+
+                // Disparar el evento cuando HP cambia
+                OnCambioHP?.Invoke();
+            }
+        }
+    }
+
+    public Hero()
+    {
+        _Healt = 10;
+    }
+
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -144,6 +170,7 @@ public class Hero : MonoBehaviour
             Debug.Log("- " + puntosDeVida + " DPS");
 
             bajarVida(puntosDeVida);
+
         }
 
     }
